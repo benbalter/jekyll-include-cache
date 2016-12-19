@@ -2,6 +2,8 @@
 
 *A Jekyll plugin to cache the rendering of Liquid includes*
 
+[![Build Status](https://travis-ci.org/benbalter/jekyll-include-cache.svg?branch=master)](https://travis-ci.org/benbalter/jekyll-include-cache)
+
 ## What it does
 
 If you have a computationally expensive include (such as a sidebar or navigation), Jekyll Include Cache renders the include once, and then reuses the output any time that includes is called with the same arguments, potentially speeding up your site's build significantly.
