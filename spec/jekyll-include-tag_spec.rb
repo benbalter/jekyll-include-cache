@@ -1,7 +1,11 @@
 RSpec.describe JekyllIncludeCache do
-  it "initializess the cache" do
-    expect(described_class.cache).to be_a(Hash)
-    expect(described_class.cache).to be_empty
+  context "with an empty cache" do
+    before { described_class.remove_instance_variable("@cache") }
+
+    it "initializess the cache" do
+      expect(described_class.cache).to be_a(Hash)
+      expect(described_class.cache).to be_empty
+    end
   end
 
   context "with something cached" do
