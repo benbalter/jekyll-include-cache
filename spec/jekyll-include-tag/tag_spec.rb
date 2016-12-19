@@ -12,7 +12,7 @@ RSpec.describe JekyllIncludeCache::Tag do
   let(:context) { Liquid::Context.new(environments, outer_scope, registers) }
 
   subject { described_class.send(:new, tag_name, markup, nil) }
-  let(:cache) { subject.send(:cache, context) }
+  let(:cache) { JekyllIncludeCache.cache }
   let(:path) { subject.send(:path, context) }
   let(:parsed_params) { subject.parse_params(context) }
   let(:cache_key) { subject.send(:key, path, parsed_params) }
@@ -39,25 +39,6 @@ RSpec.describe JekyllIncludeCache::Tag do
     end
   end
 
-  it "initializess the cache" do
-    expect(cache).to be_a(Hash)
-    expect(cache).to be_empty
-  end
-
-  context "with something cached" do
-    let(:registers) do
-      {
-        :site            => site,
-        :cached_includes => { "foo" => "bar" }
-      }
-    end
-
-    it "returns the cache" do
-      expect(cache).to have_key("foo")
-      expect(cache["foo"]).to eql("bar")
-    end
-  end
-
   context "rendering" do
     before { subject.render(context) }
     let(:rendered) { subject.render(context) }
@@ -73,13 +54,8 @@ RSpec.describe JekyllIncludeCache::Tag do
 
     context "with the cache stubbed" do
       before { allow(subject).to receive(:key).and_return(cache_key) }
+      before { cache[cache_key] = "Some other content\n" }
       let(:cache_key) { "asdf" }
-      let(:registers) do
-        {
-          :site            => site,
-          :cached_includes => { cache_key => "Some other content\n" }
-        }
-      end
 
       it "returns the cached value" do
         expect(rendered).to eql("Some other content\n")

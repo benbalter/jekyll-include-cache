@@ -8,12 +8,14 @@ module JekyllIncludeCache
       return unless path
 
       key    = key(path, params)
-      cached = cache(context)[key]
+      cached = JekyllIncludeCache.cache[key]
 
       if cached
+        Jekyll.logger.debug "Include cache hit:", path
         cached
       else
-        cache(context)[key] = super
+        Jekyll.logger.debug "Include cache miss:", path
+        JekyllIncludeCache.cache[key] = super
       end
     end
 
@@ -27,10 +29,6 @@ module JekyllIncludeCache
 
     def key(path, params)
       Digest::MD5.hexdigest(path.to_s + params.to_s)
-    end
-
-    def cache(context)
-      context.registers[:cached_includes] ||= {}
     end
   end
 end
