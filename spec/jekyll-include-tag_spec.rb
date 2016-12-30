@@ -9,7 +9,9 @@ RSpec.describe JekyllIncludeCache do
   end
 
   context "with something cached" do
-    before { described_class.cache = { "foo" => "bar" } }
+    before do
+      described_class.instance_variable_set("@cache", { "foo" => "bar" })
+    end
 
     it "returns the cache" do
       expect(described_class.cache).to have_key("foo")

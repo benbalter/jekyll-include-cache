@@ -4,14 +4,12 @@ module JekyllIncludeCache
   autoload :Tag, "jekyll-include-cache/tag"
 
   class << self
-    attr_writer :cache
-
     def cache
       @cache ||= {}
     end
 
     def reset
-      JekyllIncludeCache.cache = {}
+      @cache = {}
     end
   end
 end
