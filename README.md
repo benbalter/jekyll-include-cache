@@ -20,7 +20,7 @@ If you have a computationally expensive include (such as a sidebar or navigation
 
   ```yml
   gems:
-    - jekyll-include_cache
+    - jekyll-include-cache
   ```
 
 3. Replace `{% include foo.html %}` in your template with `{% include_cached foo.html %}`
