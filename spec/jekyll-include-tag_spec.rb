@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe JekyllIncludeCache do
   context "with an empty cache" do
     before { described_class.remove_instance_variable("@cache") }

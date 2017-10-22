@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe JekyllIncludeCache::Tag do
   let(:tag_name) { "include_cached" }
   let(:file_path) { "foo.html" }
