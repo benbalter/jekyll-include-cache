@@ -12,8 +12,9 @@ RSpec.describe JekyllIncludeCache::Tag do
   let(:outer_scope) { {} }
   let(:registers) { { :site => site } }
   let(:context) { Liquid::Context.new(environments, outer_scope, registers) }
+  let(:parse_context) { Liquid::ParseContext.new }
 
-  subject { described_class.send(:new, tag_name, markup, nil) }
+  subject { described_class.send(:new, tag_name, markup, parse_context) }
   let(:cache) { JekyllIncludeCache.cache }
   let(:path) { subject.send(:path, context) }
   let(:parsed_params) { subject.parse_params(context) }
