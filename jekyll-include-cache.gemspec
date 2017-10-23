@@ -18,5 +18,5 @@ Gem::Specification.new do |s|
 
   s.add_dependency "jekyll", "~> 3.3"
   s.add_development_dependency "rspec", "~> 3.5"
-  s.add_development_dependency "rubocop", "~> 0.43"
+  s.add_development_dependency "rubocop", "~> 0.51"
 end
