@@ -1,7 +1,7 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
-$:.unshift File.expand_path('../lib', __FILE__)
-require 'jekyll-include-cache/version'
+$LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
+require "jekyll-include-cache/version"
 
 Gem::Specification.new do |s|
   s.name          = "jekyll-include-cache"
@@ -13,10 +13,10 @@ Gem::Specification.new do |s|
 
   s.files         = `git ls-files app lib`.split("\n")
   s.platform      = Gem::Platform::RUBY
-  s.require_paths = ['lib']
+  s.require_paths = ["lib"]
   s.license       = "MIT"
 
   s.add_dependency "jekyll", "~> 3.3"
-  s.add_development_dependency "rubocop", "~> 0.43"
   s.add_development_dependency "rspec", "~> 3.5"
+  s.add_development_dependency "rubocop", "~> 0.43"
 end

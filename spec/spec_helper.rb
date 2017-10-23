@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "jekyll-include-cache"
 
 RSpec.configure do |config|
