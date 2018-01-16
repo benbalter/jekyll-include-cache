@@ -19,9 +19,10 @@ If you have a computationally expensive include (such as a sidebar or navigation
 2. Add the following to your site's config file:
 
   ```yml
-  gems:
+  plugins:
     - jekyll-include-cache
   ```
+  💡 If you are using a Jekyll version less than 3.5.0, use the `gems` key instead of `plugins`.
 
 3. Replace `{% include foo.html %}` in your template with `{% include_cached foo.html %}`
 
