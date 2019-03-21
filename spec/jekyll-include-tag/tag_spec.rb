@@ -21,23 +21,23 @@ RSpec.describe JekyllIncludeCache::Tag do
   let(:cache_key) { subject.send(:key, path, parsed_params) }
 
   it "determines the path" do
-    expected = File.expand_path "../../fixtures/site/_includes/foo.html", __FILE__
+    expected = File.expand_path "../fixtures/site/_includes/foo.html", __dir__
     expect(path).to eql(expected)
   end
 
   context "building the key" do
     it "builds the key" do
-      key = subject.send(:key, "foo.html", { "foo" => "bar", "foo2" => "bar2" })
+      key = subject.send(:key, "foo.html", "foo" => "bar", "foo2" => "bar2")
       expect(key).to eql("19f48d1dba832dec7442c3ed57ecd9ed")
     end
 
     it "builds the key based on the path" do
-      key = subject.send(:key, "foo2.html", { "foo" => "bar", "foo2" => "bar2" })
+      key = subject.send(:key, "foo2.html", "foo" => "bar", "foo2" => "bar2")
       expect(key).to eql("1397798e1ca375c42640615904c18a8c")
     end
 
     it "builds the key based on the params" do
-      key = subject.send(:key, "foo2.html", { "foo" => "bar" })
+      key = subject.send(:key, "foo2.html", "foo" => "bar")
       expect(key).to eql("2e357f2d61c19e041986cb8409cc0e25")
     end
   end

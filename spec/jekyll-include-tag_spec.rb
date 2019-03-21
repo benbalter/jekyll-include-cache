@@ -12,7 +12,7 @@ RSpec.describe JekyllIncludeCache do
 
   context "with something cached" do
     before do
-      described_class.instance_variable_set("@cache", { "foo" => "bar" })
+      described_class.instance_variable_set("@cache", "foo" => "bar")
     end
 
     it "returns the cache" do
@@ -25,7 +25,7 @@ RSpec.describe JekyllIncludeCache do
     let(:site) { fixture_site("site") }
 
     before do
-      described_class.instance_variable_set("@cache", { "foo" => "bar" })
+      described_class.instance_variable_set("@cache", "foo" => "bar")
       Jekyll::Hooks.trigger :site, :pre_render, site, site.site_payload
     end
 

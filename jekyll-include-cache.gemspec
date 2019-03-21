@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
+$LOAD_PATH.unshift File.expand_path("lib", __dir__)
 require "jekyll-include-cache/version"
 
 Gem::Specification.new do |s|
@@ -19,4 +19,5 @@ Gem::Specification.new do |s|
   s.add_dependency "jekyll", ">= 3.7", "< 5.0"
   s.add_development_dependency "rspec", "~> 3.5"
   s.add_development_dependency "rubocop", "~> 0.51"
+  s.add_development_dependency "rubocop-jekyll", "~> 0.3"
 end
