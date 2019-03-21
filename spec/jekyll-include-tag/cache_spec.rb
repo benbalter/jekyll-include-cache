@@ -13,6 +13,10 @@ RSpec.describe JekyllIncludeCache::Cache do
     expect(subject["foo"]).to eql("bar")
   end
 
+  it "raises when a key doesn't exist" do
+    expect { subject["doesnt_exist"] }.to raise_error(RuntimeError)
+  end
+
   it "knows if a key exists" do
     expect(subject.key?("foo")).to be_truthy
     expect(subject.key?("bar")).to be_falsy

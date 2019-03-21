@@ -5,7 +5,7 @@ module JekyllIncludeCache
   class Cache
     extend Forwardable
 
-    def_delegators :@cache, :[], :[]=, :key?, :delete, :clear
+    def_delegators :@cache, :[]=, :key?, :delete, :clear
 
     def initialize(_name = nil)
       @cache = {}
@@ -18,6 +18,14 @@ module JekyllIncludeCache
         value = yield
         @cache[key] = value
         value
+      end
+    end
+
+    def [](key)
+      if key?(key)
+        @cache[key]
+      else
+        raise
       end
     end
   end
