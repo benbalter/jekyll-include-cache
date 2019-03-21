@@ -4,4 +4,4 @@ sudo: false
 cache: bundler
 env:
   - JEKYLL_VERSION="~> 3.0"
-  - JEKYLL_VERSION="~> 4.0"
+  - JEKYLL_VERSION=">= 4.0.0.pre.alpha1"
