@@ -7,14 +7,12 @@ module JekyllIncludeCache
     def render(context)
       path   = path(context)
       params = parse_params(context) if @params
+      key = key(path, params)
       return unless path
 
-      key    = key(path, params)
-      cached = JekyllIncludeCache.cache[key]
-
-      if cached
+      if JekyllIncludeCache.cache.key?(key)
         Jekyll.logger.debug "Include cache hit:", path
-        cached
+        JekyllIncludeCache.cache[key]
       else
         Jekyll.logger.debug "Include cache miss:", path
         JekyllIncludeCache.cache[key] = super

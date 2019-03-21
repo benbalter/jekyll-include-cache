@@ -21,6 +21,8 @@ end
 
 Jekyll.logger.adjust_verbosity(:quiet => true)
 
+Jekyll::Cache.base_dir = File.expand_path("../tmp", __dir__) if defined? Jekyll::Cache
+
 def fixture_path(fixture)
   File.expand_path "./fixtures/#{fixture}", File.dirname(__FILE__)
 end

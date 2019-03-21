@@ -51,7 +51,7 @@ RSpec.describe JekyllIncludeCache::Tag do
     end
 
     it "caches the include" do
-      expect(cache).to have_key(cache_key)
+      expect(cache.key?(cache_key)).to be_truthy
       expect(cache[cache_key]).to eql("Some content\n")
     end
 
