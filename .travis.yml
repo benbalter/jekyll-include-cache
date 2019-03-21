@@ -1,6 +1,3 @@
-rvm:
-  - 2.2
-before_install: gem install bundler
 language: ruby
 script: script/cibuild
 sudo: false
