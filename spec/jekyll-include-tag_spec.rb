@@ -1,23 +1,24 @@
 # frozen_string_literal: true
 
 RSpec.describe JekyllIncludeCache do
-  context "with an empty cache" do
-    before { described_class.remove_instance_variable("@cache") }
+  subject { described_class.cache }
 
+  context "with an empty cache" do
     it "initializess the cache" do
-      expect(described_class.cache).to be_a(Hash)
-      expect(described_class.cache).to be_empty
+      expect(described_class.cache).to respond_to(:[])
+      expect(described_class.cache).to respond_to(:[]=)
     end
   end
 
   context "with something cached" do
-    before do
-      described_class.instance_variable_set("@cache", "foo" => "bar")
+    before { subject["foo"] = "bar" }
+
+    it "caches" do
+      expect(subject.key?("foo")).to be_truthy
     end
 
     it "returns the cache" do
-      expect(described_class.cache).to have_key("foo")
-      expect(described_class.cache["foo"]).to eql("bar")
+      expect(subject["foo"]).to eql("bar")
     end
   end
 
@@ -25,12 +26,12 @@ RSpec.describe JekyllIncludeCache do
     let(:site) { fixture_site("site") }
 
     before do
-      described_class.instance_variable_set("@cache", "foo" => "bar")
+      subject["foo"] = "bar"
       Jekyll::Hooks.trigger :site, :pre_render, site, site.site_payload
     end
 
     it "clears the cache" do
-      expect(described_class.cache).to eql({})
+      expect(subject.key?("foo")).to_not be_truthy
     end
   end
 end
