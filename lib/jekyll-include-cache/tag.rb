@@ -4,6 +4,10 @@ require "digest/md5"
 
 module JekyllIncludeCache
   class Tag < Jekyll::Tags::IncludeTag
+    def self.digest_cache
+      @digest_cache ||= {}
+    end
+
     def render(context)
       path   = path(context)
       params = parse_params(context) if @params
@@ -28,7 +32,14 @@ module JekyllIncludeCache
     end
 
     def key(path, params)
-      Digest::MD5.hexdigest(path.to_s + params.to_s)
+      path_hash   = path.hash
+      params_hash = params.hash
+      self.class.digest_cache[path_hash] ||= {}
+      self.class.digest_cache[path_hash][params_hash] ||= digest(path_hash, params_hash)
+    end
+
+    def digest(path_hash, params_hash)
+      Digest::MD5.hexdigest("#{path_hash}#{params_hash}")
     end
   end
 end
