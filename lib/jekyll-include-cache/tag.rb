@@ -39,7 +39,10 @@ module JekyllIncludeCache
     end
 
     def digest(path_hash, params_hash)
-      Digest::MD5.hexdigest("#{path_hash}#{params_hash}")
+      md5 = Digest::MD5.new
+      md5.update path_hash.to_s
+      md5.update params_hash.to_s
+      md5.hexdigest
     end
   end
 end
