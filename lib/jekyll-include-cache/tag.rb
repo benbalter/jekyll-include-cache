@@ -44,11 +44,9 @@ module JekyllIncludeCache
       md5 = Digest::MD5.new
 
       params.each do |key, value|
-        # Using the fact that Jekyll documents don't change within a site build.
-        # Instead of calculating the hash of an entire document (expesive!)
-        # we just use the object id.
-        # This allows posts and pages to be passed to `include_cached`
-        # without a performance penality.
+        # Using the fact that Jekyll documents don't change during a build.
+        # Instead of calculating the hash of an entire document (expensive!)
+        # we just use its object id.
         if value.is_a? Jekyll::Drops::Drop
           md5.update value.object_id.to_s
         else
