@@ -28,21 +28,24 @@ RSpec.describe JekyllIncludeCache::Tag do
   context "building the key" do
     it "builds the key" do
       key = subject.send(:key, "foo.html", "foo" => "bar", "foo2" => "bar2")
+      params = { "foo" => "bar", "foo2" => "bar2" }
       expect(key).to eql(
-        subject.send(:digest, "foo.html".hash, { "foo" => "bar", "foo2" => "bar2" }.hash)
+        subject.send(:digest, "foo.html".hash, subject.send(:quick_hash, params))
       )
     end
 
     it "builds the key based on the path" do
       key = subject.send(:key, "foo2.html", "foo" => "bar", "foo2" => "bar2")
+      params = { "foo" => "bar", "foo2" => "bar2" }
       expect(key).to eql(
-        subject.send(:digest, "foo2.html".hash, { "foo" => "bar", "foo2" => "bar2" }.hash)
+        subject.send(:digest, "foo2.html".hash, subject.send(:quick_hash, params))
       )
     end
 
     it "builds the key based on the params" do
       key = subject.send(:key, "foo2.html", "foo" => "bar")
-      expect(key).to eql(subject.send(:digest, "foo2.html".hash, { "foo" => "bar" }.hash))
+      params = { "foo" => "bar" }
+      expect(key).to eql(subject.send(:digest, "foo2.html".hash, subject.send(:quick_hash, params)))
     end
   end
 

@@ -33,13 +33,35 @@ module JekyllIncludeCache
 
     def key(path, params)
       path_hash   = path.hash
-      params_hash = params.hash
+      params_hash = quick_hash(params)
       self.class.digest_cache[path_hash] ||= {}
       self.class.digest_cache[path_hash][params_hash] ||= digest(path_hash, params_hash)
     end
 
+    def quick_hash(params)
+      return params.hash unless params
+
+      md5 = Digest::MD5.new
+
+      params.sort.each do |_, value|
+        # Using the fact that Jekyll documents don't change during a build.
+        # Instead of calculating the hash of an entire document (expensive!)
+        # we just use its object id.
+        if value.is_a? Jekyll::Drops::Drop
+          md5.update value.object_id.to_s
+        else
+          md5.update value.hash.to_s
+        end
+      end
+
+      md5.hexdigest
+    end
+
     def digest(path_hash, params_hash)
-      Digest::MD5.hexdigest("#{path_hash}#{params_hash}")
+      md5 = Digest::MD5.new
+      md5.update path_hash.to_s
+      md5.update params_hash.to_s
+      md5.hexdigest
     end
   end
 end
