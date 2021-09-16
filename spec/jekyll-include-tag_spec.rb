@@ -31,7 +31,7 @@ RSpec.describe JekyllIncludeCache do
     end
 
     it "clears the cache" do
-      expect(subject.key?("foo")).to_not be_truthy
+      expect(subject.key?("foo")).not_to be_truthy
     end
   end
 end

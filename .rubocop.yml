@@ -1,4 +1,9 @@
-require: rubocop-jekyll
+inherit_from: .rubocop_todo.yml
+
+require: 
+  - rubocop-jekyll
+  - rubocop-performance
+  - rubocop-rspec
 
 inherit_gem:
   rubocop-jekyll: .rubocop.yml
@@ -6,6 +11,7 @@ inherit_gem:
 AllCops:
   Exclude:
     - vendor/**/*
+  NewCops: enable
 
 Metrics/BlockLength:
     Exclude:
