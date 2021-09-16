@@ -2,7 +2,7 @@
 
 *A Jekyll plugin to cache the rendering of Liquid includes*
 
-[![Build Status](https://travis-ci.org/benbalter/jekyll-include-cache.svg?branch=master)](https://travis-ci.org/benbalter/jekyll-include-cache)
+[![CI](https://github.com/benbalter/jekyll-include-cache/actions/workflows/ci.yml/badge.svg)](https://github.com/benbalter/jekyll-include-cache/actions/workflows/ci.yml)
 
 ## What it does
 
