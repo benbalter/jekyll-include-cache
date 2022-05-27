@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Jekyll 4.x comptable caching class for pre-4.x compatability
+# Jekyll 4.x comptable caching class for pre-4.x compatibility
 module JekyllIncludeCache
   class Cache
     extend Forwardable
