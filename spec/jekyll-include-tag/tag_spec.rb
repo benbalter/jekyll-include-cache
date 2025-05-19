@@ -27,25 +27,45 @@ RSpec.describe JekyllIncludeCache::Tag do
 
   context "building the key" do
     it "builds the key" do
+      allow(File).to receive(:exist?).with("foo.html").and_return(true)
+      allow(File).to receive(:mtime).with("foo.html").and_return(Time.at(0))
       key = subject.send(:key, "foo.html", "foo" => "bar", "foo2" => "bar2")
       params = { "foo" => "bar", "foo2" => "bar2" }
+      mtime_hash = Time.at(0).to_i.hash
       expect(key).to eql(
-        subject.send(:digest, "foo.html".hash, subject.send(:quick_hash, params))
+        subject.send(:digest, "foo.html".hash, subject.send(:quick_hash, params), mtime_hash)
       )
     end
 
     it "builds the key based on the path" do
+      allow(File).to receive(:exist?).with("foo2.html").and_return(true)
+      allow(File).to receive(:mtime).with("foo2.html").and_return(Time.at(0))
       key = subject.send(:key, "foo2.html", "foo" => "bar", "foo2" => "bar2")
       params = { "foo" => "bar", "foo2" => "bar2" }
+      mtime_hash = Time.at(0).to_i.hash
       expect(key).to eql(
-        subject.send(:digest, "foo2.html".hash, subject.send(:quick_hash, params))
+        subject.send(:digest, "foo2.html".hash, subject.send(:quick_hash, params), mtime_hash)
       )
+    end
+    it "generates different keys for different file modification times" do
+      allow(File).to receive(:exist?).with("foo.html").and_return(true)
+      allow(File).to receive(:mtime).with("foo.html").and_return(Time.at(0))
+      key1 = subject.send(:key, "foo.html", "foo" => "bar")
+      
+      # Simulate file modification
+      allow(File).to receive(:mtime).with("foo.html").and_return(Time.at(100))
+      key2 = subject.send(:key, "foo.html", "foo" => "bar")
+      
+      expect(key1).not_to eql(key2)
     end
 
     it "builds the key based on the params" do
+      allow(File).to receive(:exist?).with("foo2.html").and_return(true)
+      allow(File).to receive(:mtime).with("foo2.html").and_return(Time.at(0))
       key = subject.send(:key, "foo2.html", "foo" => "bar")
       params = { "foo" => "bar" }
-      expect(key).to eql(subject.send(:digest, "foo2.html".hash, subject.send(:quick_hash, params)))
+      mtime_hash = Time.at(0).to_i.hash
+      expect(key).to eql(subject.send(:digest, "foo2.html".hash, subject.send(:quick_hash, params), mtime_hash))
     end
   end
 
