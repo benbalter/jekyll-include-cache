@@ -34,8 +34,8 @@ module JekyllIncludeCache
     def key(path, params)
       path_hash   = path.hash
       params_hash = quick_hash(params)
-      self.class.digest_cache[path_hash] ||= {}
-      self.class.digest_cache[path_hash][params_hash] ||= digest(path_hash, params_hash)
+      mtime_hash  = File.exist?(path) ? File.mtime(path).to_i.hash : nil
+      digest(path_hash, params_hash, mtime_hash)
     end
 
     def quick_hash(params)
@@ -57,10 +57,11 @@ module JekyllIncludeCache
       md5.hexdigest
     end
 
-    def digest(path_hash, params_hash)
+    def digest(path_hash, params_hash, mtime_hash = nil)
       md5 = Digest::MD5.new
       md5.update path_hash.to_s
       md5.update params_hash.to_s
+      md5.update mtime_hash.to_s if mtime_hash
       md5.hexdigest
     end
   end

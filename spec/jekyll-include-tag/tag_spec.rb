@@ -26,26 +26,40 @@ RSpec.describe JekyllIncludeCache::Tag do
   end
 
   context "building the key" do
+    let(:mtime_hash) { Time.at(0).to_i.hash }
+
+    before do
+      allow(File).to receive_messages(:exist? => true, :mtime => Time.at(0))
+    end
+
     it "builds the key" do
       key = subject.send(:key, "foo.html", "foo" => "bar", "foo2" => "bar2")
       params = { "foo" => "bar", "foo2" => "bar2" }
-      expect(key).to eql(
-        subject.send(:digest, "foo.html".hash, subject.send(:quick_hash, params))
-      )
+      digest = subject.send(:digest, "foo.html".hash, subject.send(:quick_hash, params), mtime_hash)
+      expect(key).to eql(digest)
     end
 
     it "builds the key based on the path" do
       key = subject.send(:key, "foo2.html", "foo" => "bar", "foo2" => "bar2")
       params = { "foo" => "bar", "foo2" => "bar2" }
-      expect(key).to eql(
-        subject.send(:digest, "foo2.html".hash, subject.send(:quick_hash, params))
-      )
+      digest = subject.send(:digest, "foo2.html".hash, subject.send(:quick_hash, params),
+                            mtime_hash)
+      expect(key).to eql(digest)
+    end
+
+    it "generates different keys for different file modification times" do
+      key1 = subject.send(:key, "foo.html", "foo" => "bar")
+      allow(File).to receive(:mtime).and_return(Time.at(100))
+      key2 = subject.send(:key, "foo.html", "foo" => "bar")
+      expect(key1).not_to eql(key2)
     end
 
     it "builds the key based on the params" do
       key = subject.send(:key, "foo2.html", "foo" => "bar")
       params = { "foo" => "bar" }
-      expect(key).to eql(subject.send(:digest, "foo2.html".hash, subject.send(:quick_hash, params)))
+      digest = subject.send(:digest, "foo2.html".hash, subject.send(:quick_hash, params),
+                            mtime_hash)
+      expect(key).to eql(digest)
     end
   end
 

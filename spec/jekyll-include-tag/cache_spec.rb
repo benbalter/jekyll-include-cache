@@ -5,7 +5,7 @@ RSpec.describe JekyllIncludeCache::Cache do
 
   it "sets" do
     subject["foo2"] = "bar2"
-    cache = subject.instance_variable_get("@cache")
+    cache = subject.instance_variable_get(:@cache)
     expect(cache["foo2"]).to eql("bar2")
   end
 
@@ -32,7 +32,7 @@ RSpec.describe JekyllIncludeCache::Cache do
   it "clears" do
     expect(subject.key?("foo")).to be_truthy
     subject.clear
-    cache = subject.instance_variable_get("@cache")
+    cache = subject.instance_variable_get(:@cache)
     expect(cache).to eql({})
   end
 
