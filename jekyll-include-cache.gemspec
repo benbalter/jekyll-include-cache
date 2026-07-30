@@ -22,4 +22,11 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rubocop-jekyll", "~> 0.3"
   s.add_development_dependency "rubocop-performance", "~> 1.5"
   s.add_development_dependency "rubocop-rspec", "~> 3.0"
+  # No longer default gems as of recent Rubies; required transitively by
+  # RuboCop and Jekyll's dependencies (e.g. safe_yaml needs base64 on Ruby
+  # 3.4+, RuboCop needs benchmark/ostruct on Ruby 4.0).
+  s.add_development_dependency "base64"
+  s.add_development_dependency "benchmark"
+  s.add_development_dependency "ostruct"
+  s.add_development_dependency "tsort"
 end

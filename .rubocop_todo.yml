@@ -23,9 +23,9 @@ RSpec/ContextWording:
     - 'spec/jekyll-include-tag_spec.rb'
 
 # Offense count: 3
-# Configuration parameters: Include, CustomTransform, IgnoreMethods, SpecSuffixOnly.
+# Configuration parameters: Include, CustomTransform, IgnoreMethods.
 # Include: **/*_spec*rb*, **/spec/**/*
-RSpec/FilePath:
+RSpec/SpecFilePathFormat:
   Exclude:
     - 'spec/jekyll-include-tag/cache_spec.rb'
     - 'spec/jekyll-include-tag/tag_spec.rb'
