@@ -7,15 +7,13 @@ module JekyllIncludeCache
   autoload :Cache, "jekyll-include-cache/cache"
 
   class << self
+    # An in-memory cache of rendered includes.
+    #
+    # This deliberately doesn't use Jekyll::Cache: the cache is cleared on
+    # every render, so persisting entries to disk (Marshal + SHA2 per write)
+    # only costs time and never produces a hit on the next build.
     def cache
-      @cache ||= if defined? Jekyll::Cache
-                   # `self` is the module here, so `self.class.name` would be
-                   # "Module" and share a namespace with any other plugin
-                   # making the same mistake.
-                   Jekyll::Cache.new(name)
-                 else
-                   JekyllIncludeCache::Cache.new
-                 end
+      @cache ||= JekyllIncludeCache::Cache.new
     end
 
     def reset

@@ -10,11 +10,14 @@ RSpec.describe JekyllIncludeCache do
     end
   end
 
+  it "uses an in-memory cache" do
+    expect(subject).to be_a(JekyllIncludeCache::Cache)
+  end
+
   context "with Jekyll::Cache", :if => defined?(Jekyll::Cache) do
-    it "namespaces the cache by the plugin's name" do
+    it "doesn't write to Jekyll's shared caches" do
       subject["namespaced"] = "value"
-      expect(Jekyll::Cache.base_cache["JekyllIncludeCache"]).to include("namespaced" => "value")
-      expect(Jekyll::Cache.base_cache.fetch("Module", {})).not_to have_key("namespaced")
+      expect(Jekyll::Cache.base_cache.values).to all(satisfy { |c| !c.key?("namespaced") })
     end
   end
 
