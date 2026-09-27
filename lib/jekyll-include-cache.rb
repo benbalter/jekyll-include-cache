@@ -20,6 +20,9 @@ module JekyllIncludeCache
 
     def reset
       JekyllIncludeCache.cache.clear
+      # Keys are derived from object ids, which are only meaningful within a
+      # single build, so don't let the memo grow across `jekyll serve` rebuilds.
+      JekyllIncludeCache::Tag.digest_cache.clear
     end
   end
 end

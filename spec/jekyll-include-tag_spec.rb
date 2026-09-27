@@ -35,11 +35,16 @@ RSpec.describe JekyllIncludeCache do
 
     before do
       subject["foo"] = "bar"
+      JekyllIncludeCache::Tag.digest_cache[1] = { 2 => "digest" }
       Jekyll::Hooks.trigger :site, :pre_render, site, site.site_payload
     end
 
     it "clears the cache" do
       expect(subject.key?("foo")).not_to be_truthy
+    end
+
+    it "clears the digest cache" do
+      expect(JekyllIncludeCache::Tag.digest_cache).to be_empty
     end
   end
 end
