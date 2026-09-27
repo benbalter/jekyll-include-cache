@@ -10,6 +10,14 @@ RSpec.describe JekyllIncludeCache do
     end
   end
 
+  context "with Jekyll::Cache", :if => defined?(Jekyll::Cache) do
+    it "namespaces the cache by the plugin's name" do
+      subject["namespaced"] = "value"
+      expect(Jekyll::Cache.base_cache["JekyllIncludeCache"]).to include("namespaced" => "value")
+      expect(Jekyll::Cache.base_cache.fetch("Module", {})).not_to have_key("namespaced")
+    end
+  end
+
   context "with something cached" do
     before { subject["foo"] = "bar" }
 

@@ -9,7 +9,10 @@ module JekyllIncludeCache
   class << self
     def cache
       @cache ||= if defined? Jekyll::Cache
-                   Jekyll::Cache.new(self.class.name)
+                   # `self` is the module here, so `self.class.name` would be
+                   # "Module" and share a namespace with any other plugin
+                   # making the same mistake.
+                   Jekyll::Cache.new(name)
                  else
                    JekyllIncludeCache::Cache.new
                  end
