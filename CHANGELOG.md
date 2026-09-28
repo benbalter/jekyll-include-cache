@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.3.0
+
+### Bug fixes
+
+- Name the Jekyll 4 cache `JekyllIncludeCache` instead of `Module`, and clear
+  the digest cache on each rebuild so `jekyll serve` no longer grows without
+  bound (#43)
+
+### Performance
+
+- Keep rendered includes in memory instead of writing each one to
+  `.jekyll-cache` and wiping it before every render. Rebuilds were about 27%
+  faster in a 1,000-page benchmark with identical output (#43)
+
+### Dependencies
+
+- Declare `required_ruby_version >= 3.0` (#32)
+
+### Infrastructure
+
+- Bump `github/codeql-action` (#33, #37, #41, #42, #44)
+
 ## 0.2.2
 
 Maintenance release: no runtime behavior changes.
