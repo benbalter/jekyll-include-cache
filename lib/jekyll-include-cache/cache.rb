@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Jekyll 4.x comptable caching class for pre-4.x compatibility
+# A minimal in-memory cache exposing the subset of Jekyll::Cache's API we use
 module JekyllIncludeCache
   class Cache
     extend Forwardable

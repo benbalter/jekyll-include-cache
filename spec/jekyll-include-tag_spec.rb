@@ -10,6 +10,17 @@ RSpec.describe JekyllIncludeCache do
     end
   end
 
+  it "uses an in-memory cache" do
+    expect(subject).to be_a(JekyllIncludeCache::Cache)
+  end
+
+  context "with Jekyll::Cache", :if => defined?(Jekyll::Cache) do
+    it "doesn't write to Jekyll's shared caches" do
+      subject["namespaced"] = "value"
+      expect(Jekyll::Cache.base_cache.values).to all(satisfy { |c| !c.key?("namespaced") })
+    end
+  end
+
   context "with something cached" do
     before { subject["foo"] = "bar" }
 
@@ -27,11 +38,16 @@ RSpec.describe JekyllIncludeCache do
 
     before do
       subject["foo"] = "bar"
+      JekyllIncludeCache::Tag.digest_cache[1] = { 2 => "digest" }
       Jekyll::Hooks.trigger :site, :pre_render, site, site.site_payload
     end
 
     it "clears the cache" do
       expect(subject.key?("foo")).not_to be_truthy
+    end
+
+    it "clears the digest cache" do
+      expect(JekyllIncludeCache::Tag.digest_cache).to be_empty
     end
   end
 end
