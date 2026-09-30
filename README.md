@@ -1,6 +1,6 @@
 # Jekyll Include Cache
 
-*A Jekyll plugin to cache the rendering of Liquid includes*
+*Jekyll plugin to cache Liquid includes (include_cached) and speed up slow site builds. Supported on GitHub Pages.*
 
 [![CI](https://github.com/benbalter/jekyll-include-cache/actions/workflows/ci.yml/badge.svg)](https://github.com/benbalter/jekyll-include-cache/actions/workflows/ci.yml)
 

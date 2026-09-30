@@ -10,6 +10,14 @@ Gem::Specification.new do |s|
   s.email         = ["ben.balter@github.com"]
   s.homepage      = "https://github.com/benbalter/jekyll-include-cache"
   s.summary       = "A Jekyll plugin to cache the rendering of Liquid includes"
+  s.description   = "Jekyll plugin to cache Liquid includes (include_cached) and speed up " \
+                    "slow site builds. Supported on GitHub Pages."
+  s.metadata      = {
+    "homepage_uri"    => "https://github.com/benbalter/jekyll-include-cache",
+    "source_code_uri" => "https://github.com/benbalter/jekyll-include-cache",
+    "bug_tracker_uri" => "https://github.com/benbalter/jekyll-include-cache/issues",
+    "changelog_uri"   => "https://github.com/benbalter/jekyll-include-cache/releases",
+  }
 
   s.files         = `git ls-files app lib`.split("\n")
   s.platform      = Gem::Platform::RUBY
