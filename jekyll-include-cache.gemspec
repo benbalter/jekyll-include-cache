@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
   s.license       = "MIT"
 
   s.add_dependency "jekyll", ">= 3.7", "< 5.0"
+  s.add_development_dependency "rake", "~> 13.0"
   s.add_development_dependency "rspec", "~> 3.5"
   s.add_development_dependency "rubocop", "~> 1.0"
   s.add_development_dependency "rubocop-jekyll", "~> 0.3"
