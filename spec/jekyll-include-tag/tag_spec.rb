@@ -47,6 +47,12 @@ RSpec.describe JekyllIncludeCache::Tag do
       params = { "foo" => "bar" }
       expect(key).to eql(subject.send(:digest, "foo2.html".hash, subject.send(:quick_hash, params)))
     end
+    it "builds different keys for different parameter names" do
+      color_key = subject.send(:quick_hash, "color" => "red")
+      size_key = subject.send(:quick_hash, "size" => "red")
+
+      expect(color_key).not_to eql(size_key)
+    end
   end
 
   context "rendering" do

@@ -43,7 +43,8 @@ module JekyllIncludeCache
 
       md5 = Digest::MD5.new
 
-      params.sort.each do |_, value|
+      params.sort.each do |key, value|
+        md5.update key.hash.to_s
         # Using the fact that Jekyll documents don't change during a build.
         # Instead of calculating the hash of an entire document (expensive!)
         # we just use its object id.
