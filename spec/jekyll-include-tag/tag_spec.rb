@@ -47,6 +47,7 @@ RSpec.describe JekyllIncludeCache::Tag do
       params = { "foo" => "bar" }
       expect(key).to eql(subject.send(:digest, "foo2.html".hash, subject.send(:quick_hash, params)))
     end
+
     it "builds different keys for different parameter names" do
       color_key = subject.send(:quick_hash, "color" => "red")
       size_key = subject.send(:quick_hash, "size" => "red")
@@ -67,6 +68,20 @@ RSpec.describe JekyllIncludeCache::Tag do
     it "caches the include" do
       expect(cache.key?(cache_key)).to be_truthy
       expect(cache[cache_key]).to eql("Some content\n")
+    end
+
+    context "when calls differ only by parameter name" do
+      let(:file_path) { "shirt.html" }
+
+      def render_with(params)
+        tag = described_class.send(:new, tag_name, "#{file_path} #{params}", parse_context)
+        tag.render(context)
+      end
+
+      it "renders each call's own output" do
+        expect(render_with('color="red"')).to eql("red|\n")
+        expect(render_with('shade="red"')).to eql("|red\n")
+      end
     end
 
     context "with the cache stubbed" do
