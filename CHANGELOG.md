@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Bug fixes
+
+- Include parameter names in the cache key, so `include_cached` calls that
+  differ only by parameter name (for example `color="red"` and `shade="red"`) no
+  longer return each other's output (#55, #57)
+
 ## 0.3.1
 
 Maintenance release: no runtime behavior changes.
