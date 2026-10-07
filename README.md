@@ -35,7 +35,7 @@ For Jekyll Include Cache to work, you cannot rely on the page context to pass va
 In your template:
 
 ```liquid
-{% include_cached shirt.html size=medium color=red %}
+{% include_cached shirt.html size="medium" color="red" %}
 ```
 
 In your include:
@@ -49,7 +49,7 @@ Buy our {{ include.color }} shirt in {{ include.size }}!
 In your template:
 
 ```liquid
-{% assign color=blue %}
+{% assign color = "blue" %}
 {% include_cached shirt.html %}
 ```
 
