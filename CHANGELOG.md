@@ -1,12 +1,19 @@
 # Changelog
 
-## Unreleased
+## 0.3.2
 
 ### Bug fixes
 
 - Include parameter names in the cache key, so `include_cached` calls that
   differ only by parameter name (for example `color="red"` and `shade="red"`) no
-  longer return each other's output (#55, #57)
+  longer return each other's output (#55, #57).
+  Thanks to [@aryangetsreal](https://github.com/aryangetsreal).
+
+### Documentation
+
+- Quote the string parameters in the README's include examples, which Liquid
+  otherwise reads as undefined variables and renders as blanks (#58, #59).
+  Thanks to [@azmi2409](https://github.com/azmi2409).
 
 ## 0.3.1
 
